@@ -1,7 +1,10 @@
-LD/datasets/
-LD/runs/
 DataPipeline/Landsat_Data
 DataPipeline/myenv
+
+LD/datasets/
+LD/runs
+LD/models
+
 RCnet/data
 RCnet/data
 temp/
