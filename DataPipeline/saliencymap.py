@@ -136,7 +136,7 @@ def merge_saliency_maps(files, folder, tstnum, bounds):
     print("Merging saliency maps..")
 
     # Define the output directory path
-    output_path = os.path.join(folder, 'output')
+    output_path = os.path.join(folder, 'landmarks')
     if not os.path.exists(output_path):
         os.mkdir(output_path)
 
@@ -242,7 +242,7 @@ if __name__ == '__main__':
 
     # Process and save saliency maps
     if not skip_save:
-        process_map(unpack_and_call_save_maps, function_args, max_workers=cpu_count())
+        process_map(unpack_and_call_save_maps, function_args, max_workers=cpu_count(),  desc="Generate Saliency Maps")
 
     # Merge saliency maps
     merge_saliency_maps(files, folder, tstnum, bounds)

@@ -38,14 +38,11 @@ from tqdm.contrib.concurrent import process_map  # For multiprocessing with prog
 def sm2b(key, input_path, window, num_boxes, box_color, box_outline):
     # Read the saliency map from TIFF file
     tiff_file = input_path + '/' + key + '_saliencymap.tif'
-    print(input_path + '/' + key + '_saliencymap.tif')
+
     with rasterio.open(tiff_file) as dataset:
         saliency_map = dataset.read(1)  # Assuming saliency data is in the first band
         im_h, im_w = saliency_map.shape
 
-        # Print image dimensions
-        print("Image Height:", im_h)
-        print("Image Width:", im_w)
         # Print window size and number of boxes
         print("Window Size:", window)
         print("Number of Boxes:", num_boxes)
@@ -120,4 +117,4 @@ if __name__ == '__main__':
     function_args = [(key, input_path, window, num_boxes, box_color, box_outline) for key in args.keys]
 
     # Use process_map
-    process_map(unpack_and_call_sm2b, function_args, max_workers=cpu_count())
+    process_map(unpack_and_call_sm2b, function_args, max_workers=cpu_count(), desc="Create Landmark Bounding Boxes:")

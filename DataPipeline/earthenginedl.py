@@ -272,25 +272,15 @@ else:
 
 
 def main():
-    #indexes = range(args.startindex,args.startindex+max_ims)
-    #p = Pool(cpu_count())
-    #urls = p.starmap(getURL,zip(indexes))
-    
-    #p.starmap(downloadURL,enumerate(urls))
-    #p.close()
-    #p.join()
-
     indexes = list(range(args.startindex, args.startindex + max_ims))
-    print("Getting image urls...")
     # Use process_map to execute getURL function in parallel with progress bar
-    urls = process_map(getURL, indexes, max_workers=cpu_count(), chunksize=1)
+    urls = process_map(getURL, indexes, max_workers=cpu_count(), chunksize=1, desc="Generate download URLs")
 
-    print("Downloading images...")
     # Prepare arguments for downloadURL function
     download_args = [(i, url) for i, url in enumerate(urls)]
     # Use process_map to execute downloadURL function in parallel with progress bar
-    process_map(unpack_and_call_downloadURL, download_args, max_workers=cpu_count(), chunksize=1)
-    
+    process_map(unpack_and_call_downloadURL, download_args, max_workers=cpu_count(), chunksize=1, desc="Download Images")
+
     
 if __name__ == '__main__':
     main()

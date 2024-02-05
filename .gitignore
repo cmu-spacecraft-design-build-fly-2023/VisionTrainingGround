@@ -1,3 +1,4 @@
+DataPipeline/__pycache__
 DataPipeline/Landsat_Data
 DataPipeline/myenv
 
@@ -8,3 +9,4 @@ LD/models
 RCnet/data
 RCnet/data
 temp/
+
