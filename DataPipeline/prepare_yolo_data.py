@@ -106,8 +106,67 @@ def get_img_sizes(save_path):
     #print(im_sizes)
     return im_sizes
 
+def rotate(raster, bboxes):
+    im = raster.read().transpose(1, 2, 0)
+    width = raster.width  # Image width
+    height = raster.height  # Image height
 
-    # Function to process a single image
+    im = im[:, :, :3]  # Consider only RGB channels
+
+    gray = cv2.cvtColor(im, cv2.COLOR_RGB2GRAY)  # Convert to grayscale
+    edged = cv2.Canny(gray, 30, 150)  # Edge detection
+
+    # Find the minimum area rectangle enclosing the edges
+    coords = np.column_stack(np.where(edged > 0))
+    center, wh, angle = cv2.minAreaRect(coords)
+
+    # Rotate the image to align the detected rectangle
+    M = cv2.getRotationMatrix2D(center, -angle, 1.0)
+    rot_im = cv2.warpAffine(im, M, (width, height), flags=cv2.INTER_CUBIC, borderMode=0)
+
+    rot_boxes = {}
+    for idx, box in bboxes.items():
+        box_points = []
+        xmin, ymin = box[0]
+        xmax, ymax = box[1]
+
+        # get box centerpoint
+        cx = (xmax - xmin) / 2 + xmin
+        cy = (ymax - ymin) / 2 + ymin
+        center = list([int(cx), int(cy)])
+        box_points.append(center)
+        # get coordinates of other box corners
+        other_corners = [[xmin, ymax], [xmax, ymin]]
+
+        box_points += box
+        box_points += other_corners
+        # form array of box points (4 corners + center point)
+        box_points = np.array(box_points).reshape((5, 2))
+
+        # apply rotation on box points
+        box_points = np.vstack([box_points.T, np.ones(5)])
+        rot_box = np.dot(M, box_points).T
+
+        # recalculate UL and BR corners using rotated centerpoint and largest bounding box
+        cx, cy = rot_box[0]    
+        corners = rot_box[1:, :]
+        xmin = int(np.min(corners[:, 0]))
+        xmax = int(np.max(corners[:, 0]))
+        ymin = int(np.min(corners[:, 1]))
+        ymax = int(np.max(corners[:, 1]))
+        w = abs(xmax-xmin)
+        h = abs(ymax-ymin)
+        ul_corner = [int(cx-w/2), int(cy-h/2)]
+        br_corner = [int(cx+w/2), int(cy+h/2)]
+
+        rot_boxes.update({idx:[ul_corner, br_corner]})
+
+    rot_im = cv2.cvtColor(rot_im, cv2.COLOR_BGR2RGB)
+  
+    return rot_im, rot_boxes
+
+
+# Function to process a single image
 def process_single_image(file, data_path, all_landmarks, region):
 
     detected_boxes = {}
@@ -121,7 +180,14 @@ def process_single_image(file, data_path, all_landmarks, region):
             detected_boxes[img_name][idx] = xy_coords
 
     out_path = os.path.join(data_path, "images/", img_name + '.png')
-    convert_tif_to_png(file, out_path)
+
+    # IF VALIDATION DATA (rotate image and boxes)
+    rot_im, rot_boxes = rotate(src, detected_boxes[img_name])
+    detected_boxes[img_name] = rot_boxes
+    cv2.imwrite(out_path, rot_im)
+
+    # ELSE
+    #convert_tif_to_png(file, out_path)
 
     return detected_boxes
 
@@ -228,6 +294,5 @@ if __name__ == '__main__':
     parser.add_argument('-r', '--region', type=str, default='17R')
     args = parser.parse_args()
 
-    # folder paths: Home/Dataset/: scannet/scans/, matterport/v1/tasks/mp3d_habitat/mp3d/
     process_data_with_pool(args)
     
