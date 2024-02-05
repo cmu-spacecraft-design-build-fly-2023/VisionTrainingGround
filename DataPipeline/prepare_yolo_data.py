@@ -10,6 +10,7 @@ from PIL import Image
 import imageio
 import argparse
 import cv2
+import yaml
 from tqdm import tqdm  # Import tqdm at the beginning of your script
 from multiprocessing import Pool
 from tqdm.contrib.concurrent import process_map  # Import process_map
@@ -144,6 +145,23 @@ def generate_single_label(img_name, detected_boxes, label_path, im_size):
                 label = f"{cls} {cx_norm} {cy_norm} {width_norm} {height_norm}\n"
                 f.write(label)
 
+def generate_dataset_yaml(output_path, nc):
+    # Extract the last part of the output_path to use as 'path' in dataset.yaml
+    dataset_dir_name = os.path.basename(output_path)
+    dataset_yaml = {
+        'path': dataset_dir_name,
+        'train': 'train/images',
+        'val': 'val/images',
+        'test': 'test/images',
+        'nc': nc,
+        'names': [str(i) for i in range(nc)]
+    }
+
+    yaml_path = os.path.join(output_path, 'dataset.yaml')
+    with open(yaml_path, 'w') as yaml_file:
+        yaml.dump(dataset_yaml, yaml_file, default_flow_style=False)
+    print(f"Dataset configuration saved to {yaml_path}")
+
 def process_single_image_wrapper(args):
     return process_single_image(*args)
 
@@ -195,6 +213,12 @@ def process_data_with_pool(args):
     # Use process_map to generate label files with progress tracking
     generate_args = [(img_name, detected_boxes, label_path, im_sizes[img_name]) for img_name in detected_boxes]
     process_map(generate_single_label_wrapper, generate_args, chunksize=1, max_workers=None, desc="Generating Label Files")
+
+    # Calculate nc as the total number of unique classes
+    nc = len(detected_boxes)
+
+    # Generate dataset.yaml after processing images and labels
+    generate_dataset_yaml(args.output_path, nc)
 
 
 if __name__ == '__main__':
