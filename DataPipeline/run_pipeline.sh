@@ -5,12 +5,14 @@ BOUNDS="-84 24 -78 32"
 IDATE="2020-05-01"
 FDATE="2023-12-31"
 LANDSAT=8
-MAXIMS=50
-SCALE=150
-BOX_WIDTH=100
-BOX_COUNT=1000
+MAXIMS=500
+SCALE=328
+BOX_WIDTH=76
+BOX_COUNT=100
+VALFLAG=True
 
 BASE_OUTPATH="Landsat_Data"
+LANDMARK_BASE="17R_S2"
 FINAL_OUTPUT_PATH="/home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset"
 
 # Function to display help message
@@ -77,5 +79,5 @@ for KEY in "${KEYS[@]}"; do
   python saliencymap2boxes.py -k "$KEY" -w $BOX_WIDTH -n $BOX_COUNT -p "$BASE_OUTPATH/$KEY/landmarks"
   
   # Run prepare_yolo_data.py with configurable output path
-  python prepare_yolo_data.py --data_path "$BASE_OUTPATH/$KEY" --output_path "$FINAL_OUTPUT_PATH" --r "$KEY"
+  python prepare_yolo_data.py --data_path "$BASE_OUTPATH/$KEY" --landmark_path $LANDMARK_BASE/landmarks --output_path "$FINAL_OUTPUT_PATH" --r "$KEY" --val $VALFLAG
 done

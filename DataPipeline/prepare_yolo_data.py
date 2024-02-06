@@ -167,8 +167,8 @@ def rotate(raster, bboxes):
 
 
 # Function to process a single image
-def process_single_image(file, data_path, all_landmarks, region):
-
+def process_single_image(file, data_path, all_landmarks, region, val_set):
+    
     detected_boxes = {}
     img_name = os.path.basename(file).split('.')[0]
     detected_boxes[img_name] = {}
@@ -179,15 +179,15 @@ def process_single_image(file, data_path, all_landmarks, region):
             xy_coords = longlat_to_xy(box, src)
             detected_boxes[img_name][idx] = xy_coords
 
-    out_path = os.path.join(data_path, "images/", img_name + '.png')
+    out_path = os.path.join(data_path, img_name + '.png')
 
     # IF VALIDATION DATA (rotate image and boxes)
-    rot_im, rot_boxes = rotate(src, detected_boxes[img_name])
-    detected_boxes[img_name] = rot_boxes
-    cv2.imwrite(out_path, rot_im)
-
-    # ELSE
-    #convert_tif_to_png(file, out_path)
+    if val_set is True:
+        rot_im, rot_boxes = rotate(src, detected_boxes[img_name])
+        detected_boxes[img_name] = rot_boxes
+        cv2.imwrite(out_path, rot_im)
+    else:
+        convert_tif_to_png(file, out_path)
 
     return detected_boxes
 
@@ -195,21 +195,21 @@ def process_single_image(file, data_path, all_landmarks, region):
 # Adjustments to the generate_single_label function to match the argument signature
 def generate_single_label(img_name, detected_boxes, label_path, im_size):
     label_file = os.path.join(label_path, img_name + '.txt')
-    if img_name in detected_boxes and len(detected_boxes[img_name]) > 0:
-        with open(label_file, 'w') as f:
-            for cls, b in detected_boxes[img_name].items():
-                xmin, ymin = b[0]
-                xmax, ymax = b[1]
-                cx = (xmax + xmin) / 2
-                cy = (ymax + ymin) / 2
-                width = xmax - xmin
-                height = ymax - ymin
-                cx_norm = cx / im_size[0]
-                cy_norm = cy / im_size[1]
-                width_norm = width / im_size[0]
-                height_norm = height / im_size[1]
-                label = f"{cls} {cx_norm} {cy_norm} {width_norm} {height_norm}\n"
-                f.write(label)
+    #if img_name in detected_boxes and len(detected_boxes[img_name]) > 0:
+    with open(label_file, 'w') as f:
+        for cls, b in detected_boxes[img_name].items():
+            xmin, ymin = b[0]
+            xmax, ymax = b[1]
+            cx = (xmax + xmin) / 2
+            cy = (ymax + ymin) / 2
+            width = xmax - xmin
+            height = ymax - ymin
+            cx_norm = cx / im_size[0]
+            cy_norm = cy / im_size[1]
+            width_norm = width / im_size[0]
+            height_norm = height / im_size[1]
+            label = f"{cls} {cx_norm} {cy_norm} {width_norm} {height_norm}\n"
+            f.write(label)
 
 def generate_dataset_yaml(output_path, nc):
     # Extract the last part of the output_path to use as 'path' in dataset.yaml
@@ -235,21 +235,31 @@ def generate_single_label_wrapper(args):
     return generate_single_label(*args)
 
 def process_data_with_pool(args):
+    val_set = args.val
     data_path = args.data_path
-    landmark_path = os.path.join(data_path, "landmarks")
+    landmark_path = args.landmark_path
     output_path = args.output_path
     region = args.region
     anno_file = os.path.join(landmark_path, f"{region}_outboxes.csv")
     
     # Make sure the images output directory exists
-    save_path = os.path.join(output_path, "images")
+    if val_set is True:
+        save_path = os.path.join(output_path, "val/images")
+    else:
+        save_path = os.path.join(output_path, "train/images")
     if not os.path.isdir(save_path):
         os.makedirs(save_path)
 
     # Make sure the label output directory exists
-    label_path = os.path.join(args.output_path, 'labels')
+    if val_set is True:
+        label_path = os.path.join(args.output_path, 'val/labels')
+    else:
+        label_path = os.path.join(args.output_path, 'train/labels')
     if not os.path.isdir(label_path):
         os.makedirs(label_path)
+
+    print("save_path:", save_path)
+    print("label_path:", label_path)
 
     # Load landmarks
     all_landmarks = {}
@@ -265,7 +275,7 @@ def process_data_with_pool(args):
     files = glob.glob(os.path.join(data_path, '*.tif'))
 
     # Use process_map to process images with progress tracking
-    process_args = [(file, output_path, all_landmarks, region) for file in files]
+    process_args = [(file, save_path, all_landmarks, region, val_set) for file in files]
     detected_boxes_list = process_map(process_single_image_wrapper, process_args, chunksize=1, max_workers=None, desc="Processing Images")
 
     # Combine detected_boxes from all images
@@ -283,14 +293,17 @@ def process_data_with_pool(args):
     # Calculate nc as the total number of unique classes
     nc = len(detected_boxes)
 
-    # Generate dataset.yaml after processing images and labels
-    generate_dataset_yaml(args.output_path, nc)
+    # Generate dataset.yaml after processing tarin images and labels
+    if val_set is not True:
+        generate_dataset_yaml(args.output_path, nc)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Generates jpgs and labels in yolo format")
     parser.add_argument("--data_path", required=True, help="path to original tiff images")
+    parser.add_argument("--landmark_path", required=True, help="path to landmark annotation file")
     parser.add_argument("--output_path", required=True, help="output folder path for images and labels")
+    parser.add_argument("--val", type=bool, help="Flag for creating rotated Landsat validation dataset")
     parser.add_argument('-r', '--region', type=str, default='17R')
     args = parser.parse_args()
 
