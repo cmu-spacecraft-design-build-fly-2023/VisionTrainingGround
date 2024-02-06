@@ -90,17 +90,22 @@ def get_img_sizes(save_path):
     min_width = 100000
     min_height = 100000
     im_sizes = {}
-    for file in glob.glob(save_path + '/*.png'):
-        img_name = os.path.basename(file).split('.')[0]
-        im = Image.open(file)
-        size = im.size
 
-        if size[0] < min_width:
-            min_width = size[0]
-        if size[1] < min_height:
-            min_height = size[1]
+    # List of patterns to match both jpg and png files
+    patterns = ['*.jpg', '*.png']
 
-        im_sizes.update({img_name:size})
+    for pattern in patterns:
+        for file in glob.glob(os.path.join(save_path, pattern)):
+            img_name = os.path.basename(file).split('.')[0]
+            im = Image.open(file)
+            size = im.size
+
+            if size[0] < min_width:
+                min_width = size[0]
+            if size[1] < min_height:
+                min_height = size[1]
+
+            im_sizes.update({img_name: size})
 
     #print("min dims: ", min_width, min_height)
     #print(im_sizes)
@@ -179,14 +184,14 @@ def process_single_image(file, data_path, all_landmarks, region, val_set):
             xy_coords = longlat_to_xy(box, src)
             detected_boxes[img_name][idx] = xy_coords
 
-    out_path = os.path.join(data_path, img_name + '.png')
-
     # IF VALIDATION DATA (rotate image and boxes)
     if val_set is True:
         rot_im, rot_boxes = rotate(src, detected_boxes[img_name])
         detected_boxes[img_name] = rot_boxes
+        out_path = os.path.join(data_path, img_name + '.jpg')
         cv2.imwrite(out_path, rot_im)
     else:
+        out_path = os.path.join(data_path, img_name + '.png')
         convert_tif_to_png(file, out_path)
 
     return detected_boxes
