@@ -1,0 +1,132 @@
+Freezing layer 'model.22.dfl.conv.weight'
+[34m[1mAMP: [39m[22mrunning Automatic Mixed Precision (AMP) checks with YOLOv8n...
+[34m[1mAMP: [39m[22mchecks passed ✅
+WARNING ⚠️ imgsz=[565] must be multiple of max stride 32, updating to [576]
+[34m[1mtrain: [39m[22mScanning /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/train/labels.cache... 2000 images, 188 backgrounds, 0 corrupt: 100%|██████████| 2000/2000 [00:00<?, ?it/s]
+[34m[1mval: [39m[22mScanning /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/labels.cache... 500 images, 180 backgrounds, 0 corrupt: 100%|██████████| 500/500 [00:00<?, ?it/s]
+Plotting labels to runs/detect/yolov8l_R17_p300/labels.jpg...
+[34m[1moptimizer:[39m[22m 'optimizer=auto' found, ignoring 'lr0=0.01' and 'momentum=0.937' and determining best 'optimizer', 'lr0' and 'momentum' automatically...
+[34m[1moptimizer:[39m[22m SGD(lr=0.01, momentum=0.9) with parameter groups 97 weight(decay=0.0), 104 weight(decay=0.0005), 103 bias(decay=0.0)
+Image sizes 576 train, 576 val
+Using 8 dataloader workers
+Logging results to [1mruns/detect/yolov8l_R17_p300
+Starting training for 1000 epochs...
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+
+
+
+
+
+
+
+
+
+     1/1000      8.57G      2.376      5.399      2.497        126        576: 100%|██████████| 125/125 [00:22<00:00,  5.51it/s]
+
+
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 16/16 [00:03<00:00,  4.47it/s]
+                   all        500       2474      0.854      0.012    0.00481    0.00117
+Ultralytics YOLOv8.1.10 🚀 Python-3.8.18 torch-2.2.0+cu121 CUDA:0 (NVIDIA GeForce RTX 4090, 23997MiB)
+YOLOv8l summary (fused): 268 layers, 43668288 parameters, 0 gradients, 165.2 GFLOPs
+Generating Visualizations for batch-1/1:   0%|                                                                                                                                              | 0/32 [00:00<?, ?it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00110.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  12%|████████████████▊                                                                                                                     | 4/32 [00:00<00:02, 13.30it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00048.jpg has no bounding boxes labels
+[34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00255.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  19%|█████████████████████████▏                                                                                                            | 6/32 [00:00<00:01, 13.06it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00127.jpg has no bounding boxes labels
+[34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00027.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  25%|█████████████████████████████████▌                                                                                                    | 8/32 [00:00<00:01, 13.17it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00497.jpg has no bounding boxes labels
+[34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00197.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  31%|█████████████████████████████████████████▌                                                                                           | 10/32 [00:00<00:01, 13.30it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00481.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  38%|█████████████████████████████████████████████████▉                                                                                   | 12/32 [00:00<00:01, 13.83it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00444.jpg has no bounding boxes labels
+[34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00045.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  44%|██████████████████████████████████████████████████████████▏                                                                          | 14/32 [00:01<00:01, 13.96it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00268.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  50%|██████████████████████████████████████████████████████████████████▌                                                                  | 16/32 [00:01<00:01, 14.59it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00014.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  56%|██████████████████████████████████████████████████████████████████████████▊                                                          | 18/32 [00:01<00:00, 14.20it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00124.jpg has no bounding boxes labels
+[34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00395.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 32/32 [00:02<00:00, 13.98it/s]
+Generating Visualizations for batch-1/1:  25%|█████████████████████████████████▌                                                                                                    | 8/32 [00:00<00:01, 14.21it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00474.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  50%|██████████████████████████████████████████████████████████████████▌                                                                  | 16/32 [00:01<00:01, 13.39it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00234.jpg has no bounding boxes labels
+[34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00113.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  56%|██████████████████████████████████████████████████████████████████████████▊                                                          | 18/32 [00:01<00:01, 12.90it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00212.jpg has no bounding boxes labels
+[34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00302.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  62%|███████████████████████████████████████████████████████████████████████████████████▏                                                 | 20/32 [00:01<00:00, 13.12it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00068.jpg has no bounding boxes labels
+[34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00092.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  69%|███████████████████████████████████████████████████████████████████████████████████████████▍                                         | 22/32 [00:01<00:00, 13.51it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00396.jpg has no bounding boxes labels
+[34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00111.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  81%|████████████████████████████████████████████████████████████████████████████████████████████████████████████                         | 26/32 [00:01<00:00, 14.03it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00123.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  88%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▍                | 28/32 [00:02<00:00, 14.77it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00109.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1:  94%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████▋        | 30/32 [00:02<00:00, 14.86it/s][34m[1mwandb[39m[22m: [33mWARNING[39m Image: /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/images/l8_17R_00269.jpg has no bounding boxes labels
+Generating Visualizations for batch-1/1: 100%|█████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 32/32 [00:02<00:00, 13.88it/s]
+  0%|          | 0/125 [00:00<?, ?it/s]
+
+
+
+
+
+
+
+
+     2/1000      9.37G      1.632      2.799      1.789         94        576: 100%|██████████| 125/125 [00:17<00:00,  7.13it/s]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 16/16 [00:01<00:00,  8.54it/s]
+Traceback (most recent call last):
+  File "train_yolo_v2.py", line 10, in <module>
+    results = model.train(
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/engine/model.py", line 601, in train
+    self.trainer.train()
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/engine/trainer.py", line 208, in train
+    self._do_train(world_size)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/engine/trainer.py", line 424, in _do_train
+    self.metrics, self.fitness = self.validate()
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/engine/trainer.py", line 543, in validate
+    metrics = self.validator(self)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/engine/validator.py", line 198, in __call__
+    self.run_callbacks("on_val_end")
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/engine/validator.py", line 266, in run_callbacks
+    callback(self)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/utils/_contextlib.py", line 115, in decorate_context
+    return func(*args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/wandb/integration/ultralytics/callback.py", line 363, in on_val_end
+    self.validation_table = plot_detection_validation_results(
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/wandb/integration/ultralytics/bbox_utils.py", line 165, in plot_detection_validation_results
+    prediction_results = predictor(batch["im_file"])
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/engine/predictor.py", line 204, in __call__
+    return list(self.stream_inference(source, model, *args, **kwargs))  # merge list of Result into one
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/utils/_contextlib.py", line 35, in generator_context
+    response = gen.send(None)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/engine/predictor.py", line 283, in stream_inference
+    preds = self.inference(im, *args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/engine/predictor.py", line 140, in inference
+    return self.model(im, augment=self.args.augment, visualize=visualize, embed=self.args.embed, *args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/nn/autobackend.py", line 384, in forward
+    y = self.model(im, augment=augment, visualize=visualize, embed=embed)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/nn/tasks.py", line 80, in forward
+    return self.predict(x, *args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/nn/tasks.py", line 98, in predict
+    return self._predict_once(x, profile, visualize, embed)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/nn/tasks.py", line 119, in _predict_once
+    x = m(x)  # run
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/ultralytics/nn/modules/conv.py", line 54, in forward_fuse
+    return self.act(self.conv(x))
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/nn/modules/conv.py", line 460, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+  File "/home/argus-vision/anaconda3/envs/ld-train/lib/python3.8/site-packages/torch/nn/modules/conv.py", line 456, in _conv_forward
+    return F.conv2d(input, weight, bias, self.stride,
+RuntimeError: Input type (torch.cuda.FloatTensor) and weight type (torch.FloatTensor) should be the same
+                   all        500       2474      0.312     0.0146     0.0207    0.00654

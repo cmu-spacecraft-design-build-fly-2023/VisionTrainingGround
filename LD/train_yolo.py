@@ -1,25 +1,17 @@
 from ultralytics import YOLO
 
 # Load pretrained yolo model
-model = YOLO('yolov8l.pt')
+model = YOLO('yolov8s.pt')
 
 # Train
 results = model.train(
-   data='datasets/toy_dataset_new/dataset.yaml',
-   imgsz=1536,
-   epochs=200,
-   batch=2,
-
-   # Augmentation Parameters
-   degrees=0.0,
-   scale=0.1,
-   fliplr=0.0,
-   translate=0.0, 
-   shear=0.0,
-   mosaic = 0,
-   perspective = 0,
-   hsv_h=0.055,
-   name='yolov8l_R17',
+   data='datasets/17R_dataset/dataset.yaml',
+   name='yolov8s_R17_p300_scale0.3',
+   imgsz=565,
+   mosaic=0,
+   scale=0.3,
    plots=True,
-   save=True
+   save=True,
+   epochs=1000,
+   patience=300
 )

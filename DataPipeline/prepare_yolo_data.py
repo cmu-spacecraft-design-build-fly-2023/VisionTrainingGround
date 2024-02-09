@@ -296,7 +296,7 @@ def process_data_with_pool(args):
     process_map(generate_single_label_wrapper, generate_args, chunksize=1, max_workers=None, desc="Generating Label Files")
 
     # Calculate nc as the total number of unique classes
-    nc = len(detected_boxes)
+    nc = len(all_landmarks)
 
     # Generate dataset.yaml after processing tarin images and labels
     if val_set is not True:

@@ -1,0 +1,94 @@
+Freezing layer 'model.22.dfl.conv.weight'
+[34m[1mAMP: [39m[22mrunning Automatic Mixed Precision (AMP) checks with YOLOv8n...
+[34m[1mAMP: [39m[22mchecks passed ✅
+WARNING ⚠️ imgsz=[565] must be multiple of max stride 32, updating to [576]
+[34m[1mtrain: [39m[22mScanning /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/train/labels.cache... 2000 images, 188 backgrounds, 0 corrupt: 100%|██████████
+[34m[1mval: [39m[22mScanning /home/argus-vision/vision/VisionTrainingGround/LD/datasets/17R_dataset/val/labels.cache... 500 images, 180 backgrounds, 0 corrupt: 100%|██████████| 500
+Plotting labels to runs/detect/yolov8S_R17_p502/labels.jpg...
+[34m[1moptimizer:[39m[22m 'optimizer=auto' found, ignoring 'lr0=0.01' and 'momentum=0.937' and determining best 'optimizer', 'lr0' and 'momentum' automatically...
+[34m[1moptimizer:[39m[22m SGD(lr=0.01, momentum=0.9) with parameter groups 57 weight(decay=0.0), 64 weight(decay=0.0005), 63 bias(decay=0.0)
+Image sizes 576 train, 576 val
+Using 8 dataloader workers
+Logging results to [1mruns/detect/yolov8S_R17_p502
+Starting training for 1000 epochs...
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+
+
+
+
+
+
+
+
+     1/1000      2.38G      2.333      5.609      2.305        126        576: 100%|██████████| 125/125 [00:20<00:00,  6.24it/s]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 16/16 [00:00<00:00, 22.79it/s]
+                   all        500       2474          0          0          0          0
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+
+
+
+
+
+
+
+     2/1000      2.43G      1.728      5.409      1.728         94        576: 100%|██████████| 125/125 [00:16<00:00,  7.75it/s]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 16/16 [00:00<00:00, 17.32it/s]
+                   all        500       2474          0          0          0          0
+      Epoch    GPU_mem   box_loss   cls_loss   dfl_loss  Instances       Size
+
+
+
+
+
+
+     3/1000      2.43G      1.641      5.177      1.732        121        576: 100%|██████████| 125/125 [00:15<00:00,  8.12it/s]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 16/16 [00:01<00:00, 14.55it/s]
+     4/1000      2.42G      1.512      4.949      1.678        152        576:   0%|          | 0/125 [00:00<?, ?it/s]
+                   all        500       2474       0.62     0.0063    0.00583    0.00253
+
+
+
+
+
+
+
+     4/1000      2.43G      1.582      4.741      1.789        142        576: 100%|██████████| 125/125 [00:15<00:00,  7.98it/s]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95):  38%|███▊      | 6/16 [00:00<00:00, 13.47it/s]
+                 Class     Images  Instances      Box(P          R      mAP50  mAP50-95): 100%|██████████| 16/16 [00:01<00:00, 14.36it/s]
+     5/1000      2.43G      1.601      4.421      1.846         94        576:   7%|▋         | 9/125 [00:00<00:08, 13.54it/s]
+
+
+     5/1000      2.43G      1.536      4.368      1.808        138        576:  29%|██▉       | 36/125 [00:04<00:12,  7.21it/s]
+Traceback (most recent call last):
+  File "/home/argus-vision/vision/VisionTrainingGround/LD/train_yolo.py", line 7, in <module>
+    results = model.train(
+              ^^^^^^^^^^^^
+  File "/home/argus-vision/anaconda3/lib/python3.11/site-packages/ultralytics/engine/model.py", line 601, in train
+    self.trainer.train()
+  File "/home/argus-vision/anaconda3/lib/python3.11/site-packages/ultralytics/engine/trainer.py", line 208, in train
+    self._do_train(world_size)
+  File "/home/argus-vision/anaconda3/lib/python3.11/site-packages/ultralytics/engine/trainer.py", line 358, in _do_train
+    for i, batch in pbar:
+  File "/home/argus-vision/anaconda3/lib/python3.11/site-packages/tqdm/std.py", line 1178, in __iter__
+    for obj in iterable:
+  File "/home/argus-vision/anaconda3/lib/python3.11/site-packages/ultralytics/data/build.py", line 49, in __iter__
+    yield next(self.iterator)
+          ^^^^^^^^^^^^^^^^^^^
+  File "/home/argus-vision/anaconda3/lib/python3.11/site-packages/torch/utils/data/dataloader.py", line 631, in __next__
+    data = self._next_data()
+           ^^^^^^^^^^^^^^^^^
+  File "/home/argus-vision/anaconda3/lib/python3.11/site-packages/torch/utils/data/dataloader.py", line 1329, in _next_data
+    idx, data = self._get_data()
+                ^^^^^^^^^^^^^^^^
+  File "/home/argus-vision/anaconda3/lib/python3.11/site-packages/torch/utils/data/dataloader.py", line 1285, in _get_data
+    success, data = self._try_get_data()
+                    ^^^^^^^^^^^^^^^^^^^^
+  File "/home/argus-vision/anaconda3/lib/python3.11/site-packages/torch/utils/data/dataloader.py", line 1133, in _try_get_data
+    data = self._data_queue.get(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/argus-vision/anaconda3/lib/python3.11/queue.py", line 180, in get
+    self.not_empty.wait(remaining)
+  File "/home/argus-vision/anaconda3/lib/python3.11/threading.py", line 324, in wait
+    gotit = waiter.acquire(True, timeout)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
