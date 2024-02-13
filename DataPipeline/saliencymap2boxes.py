@@ -75,7 +75,10 @@ def sm2b(key, input_path, window, num_boxes, box_color, box_outline):
         for x, y, w, h in boxes:
             tl_lon, tl_lat = dataset.xy(y, x)  # Top-left
             br_lon, br_lat = dataset.xy(y + h, x + w)  # Bottom-right
-            outboxes.append([tl_lon, tl_lat, br_lon, br_lat])
+            # Calculate centroid coordinates
+            centroid_lon = (tl_lon + br_lon) / 2
+            centroid_lat = (tl_lat + br_lat) / 2
+            outboxes.append([centroid_lon, centroid_lat, tl_lon, tl_lat, br_lon, br_lat])
 
         # Save as .npy
         outboxes = np.array(outboxes)
@@ -86,7 +89,7 @@ def sm2b(key, input_path, window, num_boxes, box_color, box_outline):
         with open(csv_file_path, mode='w', newline='') as file:
             csv_writer = csv.writer(file)
             # Write header (optional, but recommended for clarity)
-            csv_writer.writerow(['Top-Left Longitude', 'Top-Left Latitude', 'Bottom-Right Longitude', 'Bottom-Right Latitude'])
+            csv_writer.writerow(['Centroid Longitude', 'Centroid Latitude', 'Top-Left Longitude', 'Top-Left Latitude', 'Bottom-Right Longitude', 'Bottom-Right Latitude'])
             # Write data
             for box in outboxes:
                 csv_writer.writerow(box)

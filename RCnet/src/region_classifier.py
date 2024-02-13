@@ -28,7 +28,7 @@ class ImageClassifier:
         train_dataset = CustomImageDataset(root_dir=train_path, transform=transform)
         test_dataset = CustomImageDataset(root_dir=test_path, transform=transform)
         self.train_loader = DataLoader(dataset=train_dataset, batch_size=32, shuffle=True)
-        self.test_loader = DataLoader(dataset=test_dataset, batch_size=32, shuffle=False)
+        self.test_loader = DataLoader(dataset=test_dataset, batch_size=32, shuffle=True)
 
     # def _initialize_model(self):
     #     self.model = models.resnet18(pretrained=True)
