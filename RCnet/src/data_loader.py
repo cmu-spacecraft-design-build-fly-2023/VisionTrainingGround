@@ -1,14 +1,14 @@
 import os
-from PIL import Image
+from PIL import Image,ImageFile
 from torch.utils.data import Dataset
-
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 class CustomImageDataset(Dataset):
     def __init__(self, root_dir, transform=None):
         self.root_dir = root_dir
         self.transform = transform
         self.classes = os.listdir(root_dir)
-        self.files = [(f, label) for label in self.classes for f in os.listdir(os.path.join(root_dir, label)) if f.endswith('.jpg')]
+        self.files = [(f, label) for label in self.classes for f in os.listdir(os.path.join(root_dir, label)) if f.endswith('.png')]
 
     def __len__(self):
         return len(self.files)

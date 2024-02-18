@@ -14,19 +14,19 @@ if __name__ == "__main__":
         config = yaml.safe_load(file)
     
     train_flag = config['flags']['train_flag']
-    live_plot_flag = config['flags']['live_plot_flag']
     save_plot_flag = config['flags']['save_plot_flag']
     save_plot_path = config['paths']['save_plot_path']
     train_path = config['paths']['train_path']
     test_path = config['paths']['test_path']
+    val_path = config['paths']['val_path'] 
     
-    classifier = ImageClassifier(train_path, test_path, live_plot_flag, save_plot_flag, save_plot_path)
+    
+    classifier = ImageClassifier(train_path, test_path, save_plot_flag, save_plot_path, val_path)  
     if train_flag:
-        classifier.train(epochs=config['epochs'])
+        classifier.train(epochs=config['hyperparameters']['epochs'],learning_rate=config['hyperparameters']['learning_rate'])
         classifier.save_model(path=config['paths']['model_save_path'])
     else:
         classifier.load_model(path=config['paths']['model_load_path'])
-        probabilities = classifier.evaluate()
-        # print(probabilities[0])
+        print("Loading model")
     
     classifier.evaluate()
