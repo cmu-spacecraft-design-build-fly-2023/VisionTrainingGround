@@ -113,6 +113,9 @@ class ImageClassifier:
 
             if epoch % 10 == 0:
                 self.validate()
+            if epoch % epochs ==0: 
+                test_accuracy = self.evaluate()
+                wandb.log({"test_accuracy": test_accuracy})
 
         if self.save_plot_flag:
             self.plotter.save_plot(self.save_plot_path)
